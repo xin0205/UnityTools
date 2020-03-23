@@ -17,6 +17,8 @@ namespace UGUIExtension
 
         private RectTransform m_RectTransform;
 
+        private CanvasGroup m_CanvasGroup;
+
         public float Width { get => m_width; set => m_width = value; }
         public float Height { get => m_height; set => m_height = value; }
         public Action<int, ReuseItem> RefreshCallback { get => m_RefreshCallback; set => m_RefreshCallback = value; }
@@ -26,15 +28,20 @@ namespace UGUIExtension
         public void Awake()
         {
             m_RectTransform = GetComponent<RectTransform>();
+            m_CanvasGroup = GetComponent<CanvasGroup>();
+
+            if(m_CanvasGroup == null)
+                m_CanvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+            m_CanvasGroup.alpha = 0;
         }
 
-        public void Refresh(int index, Vector2 pos, bool callback = true)
+        public void Refresh(int index, float length, bool callback = true)
         {
             Index = index;
 
-            gameObject.SetActive(callback);
-
-            m_RectTransform.anchoredPosition = m_InitialPosition + pos;
+            m_CanvasGroup.alpha = callback ? 1 : 0;
+            m_RectTransform.sizeDelta = new Vector2(m_RectTransform.sizeDelta.x, length);
 
             if (callback && m_RefreshCallback != null)
             {

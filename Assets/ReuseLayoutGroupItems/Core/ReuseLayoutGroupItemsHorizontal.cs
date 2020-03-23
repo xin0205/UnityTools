@@ -102,19 +102,26 @@ namespace UGUIExtension
             }
         }
 
-        protected override float GetItemLength(LayoutOrient layoutOrient)
+        protected override float GetItemLength(LayoutOrient layoutOrient, int index)
         {
-            switch (layoutOrient)
+            if (SameItemLength)
             {
-                case LayoutOrient.Extend:
-                    return m_ItemPrefab.Width;
+                switch (layoutOrient)
+                {
+                    case LayoutOrient.Extend:
+                        return m_ItemPrefab.Width;
 
-                case LayoutOrient.Fixed:
-                    return m_ItemPrefab.Height;
+                    case LayoutOrient.Fixed:
+                        return m_ItemPrefab.Height;
 
-                default:
-                    return 0;
+                    default:
+                        return 0;
+                }
+            }
+            else
+            {
 
+                return (index < 0 || index >= GetItemCount()) ? 0 : m_ItemExtendLengths[index];
             }
         }
 
@@ -182,7 +189,7 @@ namespace UGUIExtension
         {
             base.CheckIndex(ref index);
 
-            if (m_ItemCount <= 0)
+            if (GetItemCount() <= 0)
                 return;
 
             switch (m_LayoutGroupType)
