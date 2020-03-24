@@ -74,9 +74,6 @@ namespace UGUIExtension
         protected bool m_Init = false;
         protected bool m_RefreshLayout = false;
 
-        protected float m_ItemExtendLength;
-        protected float m_ItemFixedLength;
-
         protected int m_ItemExtendCount;
 
         protected List<float> m_ItemExtendLengths;
@@ -221,8 +218,6 @@ namespace UGUIExtension
             SameItemLength = true;
 
             m_ItemPrefab = itemPrefab;
-            m_ItemExtendLength = itemExtendLength;
-            m_ItemFixedLength = itemFixedLength;
             m_ItemRefresh = itemRefresh;
             m_ItemCount = itemCount;
 
@@ -246,13 +241,11 @@ namespace UGUIExtension
 
             m_ItemPrefab = itemPrefab;
             m_ItemExtendLengths = itemExtendLengths;
-            m_ItemFixedLength = itemFixedLength;
             m_ItemRefresh = itemRefresh;
             m_ItemCount = itemExtendLengths.Count;
 
             m_MinItemExtendLength = float.MaxValue;
             m_ItemExtendLengths.ForEach((length) => { if (length < m_MinItemExtendLength) { m_MinItemExtendLength = length; } });
-            m_ItemExtendLength = m_MinItemExtendLength;
 
             m_Init = false;
 
@@ -385,8 +378,8 @@ namespace UGUIExtension
                     m_LayoutSpacingExtend = verticalLayoutGroup.spacing;
                     m_LayoutSpacingFixed = 0;
 
-                    m_ItemPrefab.Width = m_ItemFixedLength;
-                    m_ItemPrefab.Height = m_ItemExtendLength;
+                    m_ItemPrefab.Width = m_ItemPrefab.GetComponent<RectTransform>().sizeDelta.x;
+                    m_ItemPrefab.Height = m_ItemPrefab.GetComponent<RectTransform>().sizeDelta.y;
 
                     break;
 
@@ -396,8 +389,9 @@ namespace UGUIExtension
                     m_LayoutSpacingExtend = horizontalLayoutGroup.spacing;
                     m_LayoutSpacingFixed = 0;
 
-                    m_ItemPrefab.Width = m_ItemExtendLength;
-                    m_ItemPrefab.Height = m_ItemFixedLength;
+                    m_ItemPrefab.Width = m_ItemPrefab.GetComponent<RectTransform>().sizeDelta.x;
+                    m_ItemPrefab.Height = m_ItemPrefab.GetComponent<RectTransform>().sizeDelta.y;
+
 
                     break;
             }
@@ -554,7 +548,7 @@ namespace UGUIExtension
             Vector2 deltaPos = GetItemDeltaPos();
 
             m_LayoutGroup.padding.top = (int)(m_LayoutTop - deltaPos.y);
-            m_LayoutGroup.padding.left = (int)(m_LayoutLeft - deltaPos.x);
+            m_LayoutGroup.padding.left = (int)(m_LayoutLeft + deltaPos.x);
 
             m_LayoutGroup.enabled = false;
             m_LayoutGroup.enabled = true;
@@ -568,9 +562,7 @@ namespace UGUIExtension
                 //当滑动到固定方向中间或扩展方向中间，需要跳过之前、之后的item
                 CheckIndex(ref index);
 
-                float itemExtendLength = GetItemLength(LayoutOrient.Extend, index);
-
-                child.Refresh(index, itemExtendLength, index < GetItemCount());
+                child.Refresh(index, GetItemSize(index), index < GetItemCount());
                 index++;
 
             }
@@ -986,6 +978,8 @@ namespace UGUIExtension
         protected abstract Vector2 GetNewInitialPos(Vector2 oriInitialPos, float extendDelta);
 
         protected abstract Vector2 GetEndPos();
+
+        protected abstract Vector2 GetItemSize(int itemIndex);
     }
 
 }

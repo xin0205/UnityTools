@@ -123,7 +123,17 @@ namespace UGUIExtension
             }
             else {
 
-                return (index < 0 || index >= GetItemCount()) ? 0 : m_ItemExtendLengths[index];
+                switch (layoutOrient)
+                {
+                    case LayoutOrient.Extend:
+                        return (index < 0 || index >= GetItemCount()) ? 0 : m_ItemExtendLengths[index];
+
+                    case LayoutOrient.Fixed:
+                        return m_ItemPrefab.Width;
+
+                    default:
+                        return 0;
+                }
             }
 
             
@@ -272,6 +282,12 @@ namespace UGUIExtension
 
                 return new Vector2(0, endPos);
             }
+        }
+
+        protected override Vector2 GetItemSize(int itemIndex)
+        {
+
+            return new Vector2(GetItemLength(LayoutOrient.Fixed, itemIndex), GetItemLength(LayoutOrient.Extend, itemIndex));
         }
 
     }

@@ -36,12 +36,12 @@ namespace UGUIExtension
             m_CanvasGroup.alpha = 0;
         }
 
-        public void Refresh(int index, float length, bool callback = true)
+        public void Refresh(int index, Vector2 itemSize, bool callback = true)
         {
             Index = index;
 
             m_CanvasGroup.alpha = callback ? 1 : 0;
-            m_RectTransform.sizeDelta = new Vector2(m_RectTransform.sizeDelta.x, length);
+            m_RectTransform.sizeDelta = itemSize;
 
             if (callback && m_RefreshCallback != null)
             {
