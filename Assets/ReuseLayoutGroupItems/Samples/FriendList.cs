@@ -33,15 +33,15 @@ namespace Lin {
 
             };
 
-            //m_ReuseScrollRect.InitItems(m_ReuseItem, itemLengths, 0, (index, scrollRectItem) =>
-            //{
-            //    scrollRectItem.GetComponent<FriendItem>().text.text = "Friend " + index;
-            //});
-
-            m_ReuseScrollRect.InitItems(m_ReuseItem, 100, 90, 0, (index, scrollRectItem) =>
+            m_ReuseScrollRect.InitItems(m_ReuseItem, itemLengths, 0, (index, scrollRectItem) =>
             {
                 scrollRectItem.GetComponent<FriendItem>().text.text = "Friend " + index;
             });
+
+            //m_ReuseScrollRect.InitItems(m_ReuseItem, 100, 90, 0, (index, scrollRectItem) =>
+            //{
+            //    scrollRectItem.GetComponent<FriendItem>().text.text = "Friend " + index;
+            //});
         }
 
         // Update is called once per frame
@@ -50,11 +50,7 @@ namespace Lin {
 
         }
 
-        public void AddItem()
-        {
-            m_ReuseScrollRect.AddItem();
-            m_ReuseScrollRect.SetContentPosToEnd();
-        }
+        
 
         public void RemoveItem()
         {
@@ -66,39 +62,33 @@ namespace Lin {
             m_ReuseScrollRect.RemoveAllItems();
         }
 
-        public void RefreshItem()
-        {
-
-            //int itemCount = int.Parse(m_InputField.text);
-
-            m_ReuseScrollRect.RefreshItems(Random.Range(1, 30));
-
-            m_ReuseScrollRect.ResetContentPos();
-
-        }
-
         //public void AddItem()
         //{
-        //    m_ReuseScrollRect.AddItem(Random.Range(50, 200));
+        //    m_ReuseScrollRect.AddItem();
         //    m_ReuseScrollRect.SetContentPosToEnd();
-        //}
-
-        //public void RemoveItem()
-        //{
-        //    m_ReuseScrollRect.RemoveItem();
-        //}
-
-        //public void RemoveAllItems()
-        //{
-        //    m_ReuseScrollRect.RemoveAllItems();
         //}
 
         //public void RefreshItem()
         //{
 
-        //    m_ReuseScrollRect.RefreshItems(GetRandomList());
-        //    m_ReuseScrollRect.SetContentPosToEnd();
+        //    //int itemCount = int.Parse(m_InputField.text);
+
+        //    m_ReuseScrollRect.RefreshItems(Random.Range(1, 30));
+
+        //    m_ReuseScrollRect.ResetContentPos();
         //}
+
+        public void AddItem()
+        {
+            m_ReuseScrollRect.AddItem(Random.Range(50, 200));
+            m_ReuseScrollRect.SetContentPosToEnd();
+        }
+
+        public void RefreshItem()
+        {
+            m_ReuseScrollRect.RefreshItems(GetRandomList());
+            m_ReuseScrollRect.SetContentPosToEnd();
+        }
 
         public static List<int> countList = new List<int>{ 10, 1, 20, 0, 4, 1, 10 };
         public static int listIndex = 0;
