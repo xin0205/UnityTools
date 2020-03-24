@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using UnityEngine;
+
+public class __Name__ : MonoBehaviour
+{
+    protected void Awake()
+    {
+    }
+
+    protected void Start()
+    {
+    }
+
+    protected void Update()
+    {
+    }
+
+    protected void OnEnable()
+    {
+    }
+
+    protected void OnDisable()
+    {
+    }
+
+    protected void OnDestroy()
+    {
+    }
+}

@@ -1,0 +1,7 @@
+﻿#S_CodeBlockTest
+		int sum = 0;
+		for(int i = 0; i < __Count__; i++){
+			sum += i;
+		}
+		Debug.Log("sum:" + sum);
+#E_CodeBlockTest
