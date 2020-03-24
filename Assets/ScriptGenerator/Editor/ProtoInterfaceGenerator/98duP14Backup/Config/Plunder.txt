@@ -1,0 +1,25 @@
+comment:夺宝相关
+
+/** 掠夺宝物碎片的玩家列表，刷新也调用此接口 */
+public static final int CSPlunderPlayersListShow = 741;
+public static final int SCPlunderPlayersListShow = 742;
+
+/** 掠夺碎片的战斗 */
+public static final int CSPlunderPlayerFight = 743;
+public static final int SCPlunderPlayerFight = 744;
+
+/** 一键掠夺，直到刷出宝物碎片或者精力不足以继续刷 */
+public static final int CSPlunderPlayerSweep = 745;
+public static final int SCPlunderPlayerSweep = 746;
+
+/** 宝物合成 */
+public static final int CSTalismanSynthesis = 747;
+public static final int SCTalismanSynthesis = 748;
+
+/** 获得新的宝物 */
+public static final int SCGotNewTalismanEquip = 750;
+
+/** 法宝列表查询 */
+public static final int CSTalismanEquipQuery = 751;
+public static final int SCTalismanEquipQuery = 752;
+

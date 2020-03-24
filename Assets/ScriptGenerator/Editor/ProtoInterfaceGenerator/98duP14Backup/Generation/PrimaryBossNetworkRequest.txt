@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using GameFramework.Event;
+using GameFramework.Network;
+
+namespace P14.Hotfix {
+	/// <summary>
+	/// 个人boss相关网络请求
+	/// </summary>
+	public class PrimaryBossNetworkRequest : SingletonBase<PrimaryBossNetworkRequest>
+	{
+	    public PrimaryBossNetworkRequest()
+	    {
+			GameEntry.Event.Subscribe(SCPrimaryBossFightEventArgs.EventId, OnSCPrimaryBossFight);
+			GameEntry.Event.Subscribe(SCPrimaryBossQueryEventArgs.EventId, OnSCPrimaryBossQuery);
+			GameEntry.Event.Subscribe(SCPrimaryBossRewardEventArgs.EventId, OnSCPrimaryBossReward);
+			GameEntry.Event.Subscribe(SCPrimaryBossDeleteEventArgs.EventId, OnSCPrimaryBossDelete);
+			GameEntry.Event.Subscribe(SCPrimaryBossShareEventArgs.EventId, OnSCPrimaryBossShare);
+			GameEntry.Event.Subscribe(SCPrimaryBossBuyTicketsEventArgs.EventId, OnSCPrimaryBossBuyTickets);
+
+	        
+        }
+	
+	    ~PrimaryBossNetworkRequest() {
+			GameEntry.Event.Unsubscribe(SCPrimaryBossFightEventArgs.EventId, OnSCPrimaryBossFight);
+			GameEntry.Event.Unsubscribe(SCPrimaryBossQueryEventArgs.EventId, OnSCPrimaryBossQuery);
+			GameEntry.Event.Unsubscribe(SCPrimaryBossRewardEventArgs.EventId, OnSCPrimaryBossReward);
+			GameEntry.Event.Unsubscribe(SCPrimaryBossDeleteEventArgs.EventId, OnSCPrimaryBossDelete);
+			GameEntry.Event.Unsubscribe(SCPrimaryBossShareEventArgs.EventId, OnSCPrimaryBossShare);
+			GameEntry.Event.Unsubscribe(SCPrimaryBossBuyTicketsEventArgs.EventId, OnSCPrimaryBossBuyTickets);
+
+        }
+	
+
+		//个人boss战斗回调
+		private void OnSCPrimaryBossFight(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPrimaryBossFight sCPrimaryBossFight = (gameEventArgs as SCPrimaryBossFightEventArgs).SCPrimaryBossFight;
+		}
+		//个人boss查询回调
+		private void OnSCPrimaryBossQuery(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPrimaryBossQuery sCPrimaryBossQuery = (gameEventArgs as SCPrimaryBossQueryEventArgs).SCPrimaryBossQuery;
+		}
+		//个人boss领奖回调
+		private void OnSCPrimaryBossReward(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPrimaryBossReward sCPrimaryBossReward = (gameEventArgs as SCPrimaryBossRewardEventArgs).SCPrimaryBossReward;
+		}
+		//个人boss逃亡确认回调
+		private void OnSCPrimaryBossDelete(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPrimaryBossDelete sCPrimaryBossDelete = (gameEventArgs as SCPrimaryBossDeleteEventArgs).SCPrimaryBossDelete;
+		}
+		//个人boss分享回调
+		private void OnSCPrimaryBossShare(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPrimaryBossShare sCPrimaryBossShare = (gameEventArgs as SCPrimaryBossShareEventArgs).SCPrimaryBossShare;
+		}
+		//购买追踪令回调
+		private void OnSCPrimaryBossBuyTickets(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPrimaryBossBuyTickets sCPrimaryBossBuyTickets = (gameEventArgs as SCPrimaryBossBuyTicketsEventArgs).SCPrimaryBossBuyTickets;
+		}
+
+
+		//个人boss战斗请求
+		public void PrimaryBossFightRequest()
+		{
+			CSPrimaryBossFight cSPrimaryBossFight = new CSPrimaryBossFight();
+			NetworkTcpHelper.Instance.Send(cSPrimaryBossFight);
+		}
+		//个人boss查询请求
+		public void PrimaryBossQueryRequest()
+		{
+			CSPrimaryBossQuery cSPrimaryBossQuery = new CSPrimaryBossQuery();
+			NetworkTcpHelper.Instance.Send(cSPrimaryBossQuery);
+		}
+		//个人boss领奖请求
+		public void PrimaryBossRewardRequest()
+		{
+			CSPrimaryBossReward cSPrimaryBossReward = new CSPrimaryBossReward();
+			NetworkTcpHelper.Instance.Send(cSPrimaryBossReward);
+		}
+		//个人boss逃亡确认请求
+		public void PrimaryBossDeleteRequest()
+		{
+			CSPrimaryBossDelete cSPrimaryBossDelete = new CSPrimaryBossDelete();
+			NetworkTcpHelper.Instance.Send(cSPrimaryBossDelete);
+		}
+		//个人boss分享请求
+		public void PrimaryBossShareRequest()
+		{
+			CSPrimaryBossShare cSPrimaryBossShare = new CSPrimaryBossShare();
+			NetworkTcpHelper.Instance.Send(cSPrimaryBossShare);
+		}
+		//购买追踪令请求
+		public void PrimaryBossBuyTicketsRequest()
+		{
+			CSPrimaryBossBuyTickets cSPrimaryBossBuyTickets = new CSPrimaryBossBuyTickets();
+			NetworkTcpHelper.Instance.Send(cSPrimaryBossBuyTickets);
+		}
+
+    }
+}

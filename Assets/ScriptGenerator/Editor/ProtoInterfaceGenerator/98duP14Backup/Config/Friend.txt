@@ -1,0 +1,58 @@
+comment:好友相关
+
+/** 查询好友情况 */
+public static final int CSPlayerFriendsQuery = 661;
+public static final int SCPlayerFriendsQuery = 662;
+
+/** 好友申请查询 */
+public static final int CSFriendRequestQuery = 663;
+public static final int SCFriendRequestQuery = 664;
+
+/** 赠送一个好友友情点 */
+public static final int CSGiveOneFriendPoint = 665;
+public static final int SCGiveOneFriendPoint = 666;
+
+/** 领取一个好友赠送的友情点 */
+public static final int CSReceiveOneFriendPoint = 667;
+public static final int SCReceiveOneFriendPoint = 668;
+
+/** 一键赠送与领取友情点 */
+public static final int CSGiveAndReceiveOneClick = 669;
+public static final int SCGiveAndReceiveOneClick = 670;
+
+/** 同意一个好友申请 */
+public static final int CSAgreeOneFriendRequest = 671;
+public static final int SCAgreeOneFriendRequest = 672;
+
+/** 拒绝（忽略）一个好友申请 */
+public static final int CSRefusedOneFriendRequest = 673;
+public static final int SCRefusedOneFriendRequest = 674;
+
+/** 全部同意好友申请 */
+public static final int CSAgreeAllFriendRequest = 675;
+public static final int SCAgreeAllFriendRequest = 676;
+
+/** 全部拒绝（忽略）好友申请 */
+public static final int CSRefusedAllFriendRequest = 677;
+public static final int SCRefusedAllFriendRequest = 678;
+
+/** 搜索玩家 */
+public static final int CSSearchPlayer = 679;
+public static final int SCSearchPlayer = 680;
+
+/** 发起添加好友申请 */
+public static final int CSRequestFriend = 681;
+public static final int SCRequestFriend = 682;
+
+/** 删除一个好友 */
+public static final int CSDeleteOneFriend = 683;
+public static final int SCDeleteOneFriend = 684;
+
+/** 通知在线玩家收到好友的友情点 */
+public static final int SCReceivingFriendPoint = 686;
+
+/** 其他玩家同意了自身发起的好友申请 */
+public static final int SCGotNewFriend = 688;
+
+/** 其他玩家想自己发起好友申请 */
+public static final int SCGotNewFriendRequest = 690;

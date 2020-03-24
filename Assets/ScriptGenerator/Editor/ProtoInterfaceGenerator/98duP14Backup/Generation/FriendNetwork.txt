@@ -1,0 +1,203 @@
+﻿using System;
+using System.Collections.Generic;
+using GameFramework.Event;
+using GameFramework.Network;
+
+namespace P14.Hotfix {
+	/// <summary>
+	/// 好友相关网络请求
+	/// </summary>
+	public class FriendNetworkRequest : SingletonBase<FriendNetworkRequest>
+	{
+	    public FriendNetworkRequest()
+	    {
+			GameEntry.Event.Subscribe(SCSCPlayerFriendsQueryEventArgs.EventId, OnSCSCPlayerFriendsQuery);
+			GameEntry.Event.Subscribe(SCSCFriendRequestQueryEventArgs.EventId, OnSCSCFriendRequestQuery);
+			GameEntry.Event.Subscribe(SCSCGiveOneFriendPointEventArgs.EventId, OnSCSCGiveOneFriendPoint);
+			GameEntry.Event.Subscribe(SCSCReceiveOneFriendPointEventArgs.EventId, OnSCSCReceiveOneFriendPoint);
+			GameEntry.Event.Subscribe(SCSCGiveAndReceiveOneClickEventArgs.EventId, OnSCSCGiveAndReceiveOneClick);
+			GameEntry.Event.Subscribe(SCSCAgreeOneFriendRequestEventArgs.EventId, OnSCSCAgreeOneFriendRequest);
+			GameEntry.Event.Subscribe(SCSCRefusedOneFriendRequestEventArgs.EventId, OnSCSCRefusedOneFriendRequest);
+			GameEntry.Event.Subscribe(SCSCAgreeAllFriendRequestEventArgs.EventId, OnSCSCAgreeAllFriendRequest);
+			GameEntry.Event.Subscribe(SCSCRefusedAllFriendRequestEventArgs.EventId, OnSCSCRefusedAllFriendRequest);
+			GameEntry.Event.Subscribe(SCSCSearchPlayerEventArgs.EventId, OnSCSCSearchPlayer);
+			GameEntry.Event.Subscribe(SCSCRequestFriendEventArgs.EventId, OnSCSCRequestFriend);
+			GameEntry.Event.Subscribe(SCSCDeleteOneFriendEventArgs.EventId, OnSCSCDeleteOneFriend);
+			GameEntry.Event.Subscribe(SCSCReceivingFriendPointEventArgs.EventId, OnSCSCReceivingFriendPoint);
+			GameEntry.Event.Subscribe(SCSCGotNewFriendEventArgs.EventId, OnSCSCGotNewFriend);
+			GameEntry.Event.Subscribe(SCSCGotNewFriendRequestEventArgs.EventId, OnSCSCGotNewFriendRequest);
+
+	        
+        }
+	
+	    ~FriendNetworkRequest() {
+			GameEntry.Event.Unsubscribe(SCSCPlayerFriendsQueryEventArgs.EventId, OnSCSCPlayerFriendsQuery);
+			GameEntry.Event.Unsubscribe(SCSCFriendRequestQueryEventArgs.EventId, OnSCSCFriendRequestQuery);
+			GameEntry.Event.Unsubscribe(SCSCGiveOneFriendPointEventArgs.EventId, OnSCSCGiveOneFriendPoint);
+			GameEntry.Event.Unsubscribe(SCSCReceiveOneFriendPointEventArgs.EventId, OnSCSCReceiveOneFriendPoint);
+			GameEntry.Event.Unsubscribe(SCSCGiveAndReceiveOneClickEventArgs.EventId, OnSCSCGiveAndReceiveOneClick);
+			GameEntry.Event.Unsubscribe(SCSCAgreeOneFriendRequestEventArgs.EventId, OnSCSCAgreeOneFriendRequest);
+			GameEntry.Event.Unsubscribe(SCSCRefusedOneFriendRequestEventArgs.EventId, OnSCSCRefusedOneFriendRequest);
+			GameEntry.Event.Unsubscribe(SCSCAgreeAllFriendRequestEventArgs.EventId, OnSCSCAgreeAllFriendRequest);
+			GameEntry.Event.Unsubscribe(SCSCRefusedAllFriendRequestEventArgs.EventId, OnSCSCRefusedAllFriendRequest);
+			GameEntry.Event.Unsubscribe(SCSCSearchPlayerEventArgs.EventId, OnSCSCSearchPlayer);
+			GameEntry.Event.Unsubscribe(SCSCRequestFriendEventArgs.EventId, OnSCSCRequestFriend);
+			GameEntry.Event.Unsubscribe(SCSCDeleteOneFriendEventArgs.EventId, OnSCSCDeleteOneFriend);
+			GameEntry.Event.Unsubscribe(SCSCReceivingFriendPointEventArgs.EventId, OnSCSCReceivingFriendPoint);
+			GameEntry.Event.Unsubscribe(SCSCGotNewFriendEventArgs.EventId, OnSCSCGotNewFriend);
+			GameEntry.Event.Unsubscribe(SCSCGotNewFriendRequestEventArgs.EventId, OnSCSCGotNewFriendRequest);
+
+        }
+	
+
+		//查询好友情况回调
+		private void OnSCSCPlayerFriendsQuery(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCPlayerFriendsQueryEventArgs sCSCPlayerFriendsQueryEventArgs = (SCSCPlayerFriendsQuery)gameEventArgs;
+		}
+		//好友申请查询回调
+		private void OnSCSCFriendRequestQuery(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCFriendRequestQueryEventArgs sCSCFriendRequestQueryEventArgs = (SCSCFriendRequestQuery)gameEventArgs;
+		}
+		//赠送一个好友友情点回调
+		private void OnSCSCGiveOneFriendPoint(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCGiveOneFriendPointEventArgs sCSCGiveOneFriendPointEventArgs = (SCSCGiveOneFriendPoint)gameEventArgs;
+		}
+		//领取一个好友赠送的友情点回调
+		private void OnSCSCReceiveOneFriendPoint(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCReceiveOneFriendPointEventArgs sCSCReceiveOneFriendPointEventArgs = (SCSCReceiveOneFriendPoint)gameEventArgs;
+		}
+		//一键赠送与领取友情点回调
+		private void OnSCSCGiveAndReceiveOneClick(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCGiveAndReceiveOneClickEventArgs sCSCGiveAndReceiveOneClickEventArgs = (SCSCGiveAndReceiveOneClick)gameEventArgs;
+		}
+		//同意一个好友申请回调
+		private void OnSCSCAgreeOneFriendRequest(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCAgreeOneFriendRequestEventArgs sCSCAgreeOneFriendRequestEventArgs = (SCSCAgreeOneFriendRequest)gameEventArgs;
+		}
+		//同意一个好友申请回调
+		private void OnSCSCRefusedOneFriendRequest(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCRefusedOneFriendRequestEventArgs sCSCRefusedOneFriendRequestEventArgs = (SCSCRefusedOneFriendRequest)gameEventArgs;
+		}
+		//全部同意好友申请回调
+		private void OnSCSCAgreeAllFriendRequest(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCAgreeAllFriendRequestEventArgs sCSCAgreeAllFriendRequestEventArgs = (SCSCAgreeAllFriendRequest)gameEventArgs;
+		}
+		//全部同意好友申请回调
+		private void OnSCSCRefusedAllFriendRequest(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCRefusedAllFriendRequestEventArgs sCSCRefusedAllFriendRequestEventArgs = (SCSCRefusedAllFriendRequest)gameEventArgs;
+		}
+		//搜索玩家回调
+		private void OnSCSCSearchPlayer(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCSearchPlayerEventArgs sCSCSearchPlayerEventArgs = (SCSCSearchPlayer)gameEventArgs;
+		}
+		//发起添加好友申请回调
+		private void OnSCSCRequestFriend(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCRequestFriendEventArgs sCSCRequestFriendEventArgs = (SCSCRequestFriend)gameEventArgs;
+		}
+		//删除一个好友回调
+		private void OnSCSCDeleteOneFriend(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCDeleteOneFriendEventArgs sCSCDeleteOneFriendEventArgs = (SCSCDeleteOneFriend)gameEventArgs;
+		}
+		//通知在线玩家收到好友的友情点回调
+		private void OnSCSCReceivingFriendPoint(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCReceivingFriendPointEventArgs sCSCReceivingFriendPointEventArgs = (SCSCReceivingFriendPoint)gameEventArgs;
+		}
+		//其他玩家同意了自身发起的好友申请回调
+		private void OnSCSCGotNewFriend(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCGotNewFriendEventArgs sCSCGotNewFriendEventArgs = (SCSCGotNewFriend)gameEventArgs;
+		}
+		//其他玩家想自己发起好友申请回调
+		private void OnSCSCGotNewFriendRequest(object sender, GameEventArgs gameEventArgs)
+		{
+			SCSCGotNewFriendRequestEventArgs sCSCGotNewFriendRequestEventArgs = (SCSCGotNewFriendRequest)gameEventArgs;
+		}
+
+
+		//查询好友情况请求
+		public void CSPlayerFriendsQueryRequest()
+		{
+			CSCSPlayerFriendsQuery cSCSPlayerFriendsQuery = new CSCSPlayerFriendsQuery();
+			NetworkTcpHelper.Instance.Send(cSCSPlayerFriendsQuery);
+		}
+		//好友申请查询请求
+		public void CSFriendRequestQueryRequest()
+		{
+			CSCSFriendRequestQuery cSCSFriendRequestQuery = new CSCSFriendRequestQuery();
+			NetworkTcpHelper.Instance.Send(cSCSFriendRequestQuery);
+		}
+		//赠送一个好友友情点请求
+		public void CSGiveOneFriendPointRequest()
+		{
+			CSCSGiveOneFriendPoint cSCSGiveOneFriendPoint = new CSCSGiveOneFriendPoint();
+			NetworkTcpHelper.Instance.Send(cSCSGiveOneFriendPoint);
+		}
+		//领取一个好友赠送的友情点请求
+		public void CSReceiveOneFriendPointRequest()
+		{
+			CSCSReceiveOneFriendPoint cSCSReceiveOneFriendPoint = new CSCSReceiveOneFriendPoint();
+			NetworkTcpHelper.Instance.Send(cSCSReceiveOneFriendPoint);
+		}
+		//一键赠送与领取友情点请求
+		public void CSGiveAndReceiveOneClickRequest()
+		{
+			CSCSGiveAndReceiveOneClick cSCSGiveAndReceiveOneClick = new CSCSGiveAndReceiveOneClick();
+			NetworkTcpHelper.Instance.Send(cSCSGiveAndReceiveOneClick);
+		}
+		//同意一个好友申请请求
+		public void CSAgreeOneFriendRequestRequest()
+		{
+			CSCSAgreeOneFriendRequest cSCSAgreeOneFriendRequest = new CSCSAgreeOneFriendRequest();
+			NetworkTcpHelper.Instance.Send(cSCSAgreeOneFriendRequest);
+		}
+		//同意一个好友申请请求
+		public void CSRefusedOneFriendRequestRequest()
+		{
+			CSCSRefusedOneFriendRequest cSCSRefusedOneFriendRequest = new CSCSRefusedOneFriendRequest();
+			NetworkTcpHelper.Instance.Send(cSCSRefusedOneFriendRequest);
+		}
+		//全部同意好友申请请求
+		public void CSAgreeAllFriendRequestRequest()
+		{
+			CSCSAgreeAllFriendRequest cSCSAgreeAllFriendRequest = new CSCSAgreeAllFriendRequest();
+			NetworkTcpHelper.Instance.Send(cSCSAgreeAllFriendRequest);
+		}
+		//全部同意好友申请请求
+		public void CSRefusedAllFriendRequestRequest()
+		{
+			CSCSRefusedAllFriendRequest cSCSRefusedAllFriendRequest = new CSCSRefusedAllFriendRequest();
+			NetworkTcpHelper.Instance.Send(cSCSRefusedAllFriendRequest);
+		}
+		//搜索玩家请求
+		public void CSSearchPlayerRequest()
+		{
+			CSCSSearchPlayer cSCSSearchPlayer = new CSCSSearchPlayer();
+			NetworkTcpHelper.Instance.Send(cSCSSearchPlayer);
+		}
+		//发起添加好友申请请求
+		public void CSRequestFriendRequest()
+		{
+			CSCSRequestFriend cSCSRequestFriend = new CSCSRequestFriend();
+			NetworkTcpHelper.Instance.Send(cSCSRequestFriend);
+		}
+		//删除一个好友请求
+		public void CSDeleteOneFriendRequest()
+		{
+			CSCSDeleteOneFriend cSCSDeleteOneFriend = new CSCSDeleteOneFriend();
+			NetworkTcpHelper.Instance.Send(cSCSDeleteOneFriend);
+		}  
+    }
+}

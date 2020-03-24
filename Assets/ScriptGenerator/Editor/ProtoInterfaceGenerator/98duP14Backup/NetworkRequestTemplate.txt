@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using GameFramework.Event;
+using GameFramework.Network;
+
+namespace P14.Hotfix {
+	/// <summary>
+	/// __Name_Comment__网络请求
+	/// </summary>
+	public class __Name__NetworkRequest : SingletonBase<__Name__NetworkRequest>
+	{
+	    public __Name__NetworkRequest()
+	    {
+__Event_Sub__
+	        
+        }
+	
+	    ~__Name__NetworkRequest() {
+__Event_Unsub__
+        }
+	
+
+__SC_Callback__
+
+__CS_Request__
+    }
+}

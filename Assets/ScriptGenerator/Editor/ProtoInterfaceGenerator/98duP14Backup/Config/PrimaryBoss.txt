@@ -1,0 +1,20 @@
+comment:个人boss相关
+
+/** 个人boss战斗 */
+public static final int CSPrimaryBossFight = 1101;
+public static final int SCPrimaryBossFight = 1102;
+/** 个人boss查询 */
+public static final int CSPrimaryBossQuery = 1103;
+public static final int SCPrimaryBossQuery = 1104;
+/** 个人boss领奖 */
+public static final int CSPrimaryBossReward = 1105;
+public static final int SCPrimaryBossReward = 1106;
+/** 个人boss逃亡确认 */
+public static final int CSPrimaryBossDelete = 1107;
+public static final int SCPrimaryBossDelete = 1108;
+/** 个人boss分享 */
+public static final int CSPrimaryBossShare = 1109;
+public static final int SCPrimaryBossShare = 1110;
+/** 购买追踪令 */
+public static final int CSPrimaryBossBuyTickets = 1111;
+public static final int SCPrimaryBossBuyTickets = 1112;

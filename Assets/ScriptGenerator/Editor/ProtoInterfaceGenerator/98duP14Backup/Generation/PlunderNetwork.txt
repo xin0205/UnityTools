@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using GameFramework.Event;
+using GameFramework.Network;
+
+namespace P14.Hotfix {
+	/// <summary>
+	/// 夺宝相关网络请求
+	/// </summary>
+	public class PlunderNetworkRequest : SingletonBase<PlunderNetworkRequest>
+	{
+	    public PlunderNetworkRequest()
+	    {
+			GameEntry.Event.Subscribe(SCPlunderPlayersListShowEventArgs.EventId, OnSCPlunderPlayersListShow);
+			GameEntry.Event.Subscribe(SCPlunderPlayerFightEventArgs.EventId, OnSCPlunderPlayerFight);
+			GameEntry.Event.Subscribe(SCPlunderPlayerSweepEventArgs.EventId, OnSCPlunderPlayerSweep);
+			GameEntry.Event.Subscribe(SCTalismanSynthesisEventArgs.EventId, OnSCTalismanSynthesis);
+			GameEntry.Event.Subscribe(SCGotNewTalismanEquipEventArgs.EventId, OnSCGotNewTalismanEquip);
+			GameEntry.Event.Subscribe(SCTalismanEquipQueryEventArgs.EventId, OnSCTalismanEquipQuery);
+
+	        
+        }
+	
+	    ~PlunderNetworkRequest() {
+			GameEntry.Event.Unsubscribe(SCPlunderPlayersListShowEventArgs.EventId, OnSCPlunderPlayersListShow);
+			GameEntry.Event.Unsubscribe(SCPlunderPlayerFightEventArgs.EventId, OnSCPlunderPlayerFight);
+			GameEntry.Event.Unsubscribe(SCPlunderPlayerSweepEventArgs.EventId, OnSCPlunderPlayerSweep);
+			GameEntry.Event.Unsubscribe(SCTalismanSynthesisEventArgs.EventId, OnSCTalismanSynthesis);
+			GameEntry.Event.Unsubscribe(SCGotNewTalismanEquipEventArgs.EventId, OnSCGotNewTalismanEquip);
+			GameEntry.Event.Unsubscribe(SCTalismanEquipQueryEventArgs.EventId, OnSCTalismanEquipQuery);
+
+        }
+	
+
+		//掠夺宝物碎片的玩家列表，刷新也调用此接口回调
+		private void OnSCPlunderPlayersListShow(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPlunderPlayersListShow sCPlunderPlayersListShow = (gameEventArgs as SCPlunderPlayersListShowEventArgs).SCPlunderPlayersListShow;
+		}
+		//掠夺碎片的战斗回调
+		private void OnSCPlunderPlayerFight(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPlunderPlayerFight sCPlunderPlayerFight = (gameEventArgs as SCPlunderPlayerFightEventArgs).SCPlunderPlayerFight;
+		}
+		//一键掠夺，直到刷出宝物碎片或者精力不足以继续刷回调
+		private void OnSCPlunderPlayerSweep(object sender, GameEventArgs gameEventArgs)
+		{
+			SCPlunderPlayerSweep sCPlunderPlayerSweep = (gameEventArgs as SCPlunderPlayerSweepEventArgs).SCPlunderPlayerSweep;
+		}
+		//宝物合成回调
+		private void OnSCTalismanSynthesis(object sender, GameEventArgs gameEventArgs)
+		{
+			SCTalismanSynthesis sCTalismanSynthesis = (gameEventArgs as SCTalismanSynthesisEventArgs).SCTalismanSynthesis;
+		}
+		//获得新的宝物回调
+		private void OnSCGotNewTalismanEquip(object sender, GameEventArgs gameEventArgs)
+		{
+			SCGotNewTalismanEquip sCGotNewTalismanEquip = (gameEventArgs as SCGotNewTalismanEquipEventArgs).SCGotNewTalismanEquip;
+		}
+		//法宝列表查询回调
+		private void OnSCTalismanEquipQuery(object sender, GameEventArgs gameEventArgs)
+		{
+			SCTalismanEquipQuery sCTalismanEquipQuery = (gameEventArgs as SCTalismanEquipQueryEventArgs).SCTalismanEquipQuery;
+		}
+
+
+		//掠夺宝物碎片的玩家列表，刷新也调用此接口请求
+		public void PlunderPlayersListShowRequest()
+		{
+			CSPlunderPlayersListShow cSPlunderPlayersListShow = new CSPlunderPlayersListShow();
+			NetworkTcpHelper.Instance.Send(cSPlunderPlayersListShow);
+		}
+		//掠夺碎片的战斗请求
+		public void PlunderPlayerFightRequest()
+		{
+			CSPlunderPlayerFight cSPlunderPlayerFight = new CSPlunderPlayerFight();
+			NetworkTcpHelper.Instance.Send(cSPlunderPlayerFight);
+		}
+		//一键掠夺，直到刷出宝物碎片或者精力不足以继续刷请求
+		public void PlunderPlayerSweepRequest()
+		{
+			CSPlunderPlayerSweep cSPlunderPlayerSweep = new CSPlunderPlayerSweep();
+			NetworkTcpHelper.Instance.Send(cSPlunderPlayerSweep);
+		}
+		//宝物合成请求
+		public void TalismanSynthesisRequest()
+		{
+			CSTalismanSynthesis cSTalismanSynthesis = new CSTalismanSynthesis();
+			NetworkTcpHelper.Instance.Send(cSTalismanSynthesis);
+		}
+		//法宝列表查询请求
+		public void TalismanEquipQueryRequest()
+		{
+			CSTalismanEquipQuery cSTalismanEquipQuery = new CSTalismanEquipQuery();
+			NetworkTcpHelper.Instance.Send(cSTalismanEquipQuery);
+		}
+
+    }
+}
