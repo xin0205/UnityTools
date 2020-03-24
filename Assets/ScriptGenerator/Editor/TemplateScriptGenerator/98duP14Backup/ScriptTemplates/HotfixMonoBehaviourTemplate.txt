@@ -1,0 +1,46 @@
+﻿using System.Collections;
+using UnityEngine;
+
+namespace P14.Hotfix
+{
+    public class __Name__ : HotfixMonoBehaviour
+    {
+
+        protected override void Awake(P14.HotfixMonoBehaviour uiFormLogic)
+        {
+            base.Awake(uiFormLogic);
+
+        }
+
+        protected override void Start()
+        {
+			base.Start();
+
+        }
+
+        protected override void Update()
+        {
+			base.Update();
+
+        }
+
+        protected override void OnEnable()
+        {
+			base.OnEnable();
+
+        }
+
+        protected override void OnDisable()
+        {
+			base.OnDisable();
+
+        }
+
+        protected override void OnDestroy()
+        {
+			base.OnDestroy();
+
+        }
+
+    }
+}

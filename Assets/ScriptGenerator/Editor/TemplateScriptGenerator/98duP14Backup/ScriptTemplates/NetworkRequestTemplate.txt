@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using GameFramework.Event;
+using GameFramework.Network;
+
+namespace P14.Hotfix {
+	/// <summary>
+	/// 网络请求
+	/// </summary>
+	public class __Name__ : SingletonBase<__Name__>
+	{
+        public __Name__()
+	    {
+	       
+
+        }
+	
+	    ~__Name__() {
+	        
+        }
+	
+
+	    
+    }
+}

@@ -1,0 +1,34 @@
+﻿using GameFramework.Event;
+
+namespace P14.Hotfix
+{
+    public sealed class __Name__ : GameEventArgs, IReference
+    {
+        public static readonly int EventId = typeof(__Name__).GetHashCode();
+
+        public __Name__()
+        {
+
+        }
+
+        public override int Id
+        {
+            get
+            {
+                return EventId;
+            }
+        }
+
+        public static __Name__ Create()
+        {
+            __Name__ eventArgs = ReferencePool.Acquire<__Name__>();
+            return eventArgs;
+        }
+
+
+        public override void Clear()
+        {
+
+        }
+    }
+}
