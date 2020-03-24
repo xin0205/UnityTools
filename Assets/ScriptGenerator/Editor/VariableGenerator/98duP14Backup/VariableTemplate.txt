@@ -1,0 +1,20 @@
+﻿using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine;
+
+namespace P14.Hotfix
+{
+    public class __Class_Name__ : HotfixMonoBehaviour
+    {
+__Variable_Declaration__
+		protected override void Awake(P14.HotfixMonoBehaviour uiFormLogic)
+        {
+			base.Awake(uiFormLogic);
+
+__Variable_Definition__
+__Variable_ButtonListener__
+        }
+
+
+    }
+}

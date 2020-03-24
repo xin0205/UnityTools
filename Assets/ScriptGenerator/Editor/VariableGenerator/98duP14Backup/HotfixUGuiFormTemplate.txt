@@ -1,0 +1,67 @@
+﻿namespace P14.Hotfix
+{
+    public class __Name__ : HotfixUGuiForm
+    {
+		public __Name__Variable m_UI;
+
+        public override void OnInit(P14.HotfixUGuiForm uiFormLogic,object userdata)
+        {
+			base.OnInit(uiFormLogic, userdata);
+			m_UI = GetComponent<__Name__Variable>();
+        }
+
+        public override void OnOpen(object userdata)
+        {
+			base.OnOpen(userdata);
+        }
+
+        public override void OnClose(object userdata)
+        {
+			base.OnClose(userdata);
+        }
+
+__Variable_ButtonCallback__
+
+        //     public override void OnPause()
+        //     {
+        //base.OnPause();
+        //     }
+
+        //     public override void OnResume(object userdata)
+        //     {
+        //base.OnOpen(userdata);
+        //     }
+
+        //     public override void OnCover(object userdata)
+        //     {
+        //base.OnCover(userdata);
+        //     }
+
+        //     public override void OnReveal()
+        //     {
+        //base.OnReveal();
+        //     }
+
+        //     public override void OnRefocus(object userdata)
+        //     {
+        //base.OnRefocus(userdata);
+        //     }
+
+        //     public override void OnUpdate(float elapseSeconds, float realElapseSeconds)
+        //     {
+        //base.OnUpdate(elapseSeconds, realElapseSeconds);
+        //     }
+
+
+        //     public override void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
+        //     {
+        //base.OnDepthChanged(uiGroupDepth, depthInUIGroup);
+        //     }
+
+
+
+    }
+
+    
+}
+
