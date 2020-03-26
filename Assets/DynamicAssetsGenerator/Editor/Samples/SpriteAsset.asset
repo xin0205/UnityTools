@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce81e11d244e08458900f761a35c745, type: 3}
+  m_Name: SpriteAsset
+  m_EditorClassIdentifier: 
+  Assets:
+  - Name: res_icon_60
+    Asset: {fileID: 21300000, guid: 278763091f59af24aa6b0abfcd909d2b, type: 3}
+  - Name: res_icon_61
+    Asset: {fileID: 21300000, guid: 7f0f63fb75aa59a48becc18dd3a97020, type: 3}
+  - Name: res_icon_62
+    Asset: {fileID: 21300000, guid: 0034c1d52a9745440b19a1d5bbb13fe1, type: 3}
+  - Name: res_icon_63
+    Asset: {fileID: 21300000, guid: 8ccaf8c76992b1b42bf9114effdc40d9, type: 3}
+  - Name: res_icon_64
+    Asset: {fileID: 21300000, guid: 459cb6885800fe34582058173160ec62, type: 3}
+  - Name: res_icon_65
+    Asset: {fileID: 21300000, guid: 1f0d014571128044785989b16f75da0e, type: 3}
+  - Name: res_icon_66
+    Asset: {fileID: 21300000, guid: 0c6ad227efb292045972a2a44f76e727, type: 3}
+  - Name: res_icon_67
+    Asset: {fileID: 21300000, guid: d1123e8419dd9a54eb5527a58f6348cf, type: 3}
+  - Name: res_icon_68
+    Asset: {fileID: 21300000, guid: e1333f90a538ba340ab15dd9624640d0, type: 3}
+  - Name: res_icon_69
+    Asset: {fileID: 21300000, guid: 5f0a8529daf08f4419cd9341a6d705aa, type: 3}
+  - Name: hero_bg_bsx01
+    Asset: {fileID: 21300000, guid: b5d4ab9b4ad1ac04b82ab6e92f9d801b, type: 3}
+  - Name: hero_bg_bsx02
+    Asset: {fileID: 21300000, guid: a68a75cbeb489bb4e98d72e233d507e3, type: 3}
+  - Name: hero_bg_bsx03
+    Asset: {fileID: 21300000, guid: e5de0ff15cc11704c9cb2be4a9cf10fd, type: 3}
+  - Name: hero_bg_bsx04
+    Asset: {fileID: 21300000, guid: 49b23b4f954bfb6499a5345498101f62, type: 3}
+  - Name: hero_bg_bsx05
+    Asset: {fileID: 21300000, guid: fe7e582b8a8ac024aa43530ed81c71ae, type: 3}
+  - Name: hero_bg_bsx06
+    Asset: {fileID: 21300000, guid: afc1976bd0e1035468cbdaa2a80a46b3, type: 3}
+  - Name: hero_bg_bsx07
+    Asset: {fileID: 21300000, guid: aa715633440e3784f9f09772e09336c6, type: 3}
+  - Name: hero_bg_bsx08
+    Asset: {fileID: 21300000, guid: 3db002c26d91e504881b1d6778530483, type: 3}
+  - Name: res_icon_52
+    Asset: {fileID: 21300000, guid: 7f445ff2a4369f84294e55b413a48838, type: 3}
+  - Name: res_icon_52_small
+    Asset: {fileID: 21300000, guid: 43ec83e8f696a604298d5928a02c8e92, type: 3}
+  - Name: res_icon_53
+    Asset: {fileID: 21300000, guid: d8dc16bbf1ac3274fa0f0724ae013d5f, type: 3}

@@ -1,0 +1,2 @@
+common/common_bg_rwpz1/HeroFrameWhite/英雄边框花白
+common/common_bg_rwpz2/HeroFrameGreen/英雄边框绿色

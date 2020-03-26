@@ -1,0 +1,14 @@
+﻿public static partial class Constant
+{
+	/// <summary>
+	/// 资源名称。
+	/// </summary>
+	public static partial class AssetName
+	{
+		//动态资源
+		public static class DynamicAsset
+		{
+__Variable_Definition__
+		}
+
+	}

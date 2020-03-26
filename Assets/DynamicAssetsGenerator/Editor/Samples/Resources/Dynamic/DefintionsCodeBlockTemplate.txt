@@ -1,0 +1,6 @@
+#S_AssetDefintion
+            /// <summary>
+            /// __Comment__
+            /// </summary>
+			public const int __Varialbe__ = __Index__;
+#E_AssetDefintion
