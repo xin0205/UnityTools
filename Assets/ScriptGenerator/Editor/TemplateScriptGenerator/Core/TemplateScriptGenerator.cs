@@ -22,6 +22,11 @@ namespace DevelopTools
         private static Dictionary<string, string> cachedCodeBlockDict = new Dictionary<string, string>();
         private static Regex blockRegex = new Regex(@"#S_(?<blockName>.+)\r\n(?<block>(.+\n)+)#E_\k<blockName>");
 
+        public static void GenerateScriptFile(string templateFile, string outputFile, Dictionary<string, string> codeReplaceDict)
+        {
+            GenerateScriptFile(templateFile, outputFile, codeReplaceDict, Encoding.UTF8);
+        }
+
         /// <summary>
         /// 生成模板脚本文件
         /// </summary>
