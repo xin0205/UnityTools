@@ -79,10 +79,10 @@ namespace UGUIExtension
             switch (layoutOrient)
             {
                 case LayoutOrient.Extend:
-                    return m_ScrollRect.GetComponent<RectTransform>().sizeDelta.y;
+                    return m_ScrollRect.GetComponent<RectTransform>().rect.height;
 
                 case LayoutOrient.Fixed:
-                    return m_ScrollRect.GetComponent<RectTransform>().sizeDelta.x;
+                    return m_ScrollRect.GetComponent<RectTransform>().rect.width;
 
                 default:
                     return 0;
