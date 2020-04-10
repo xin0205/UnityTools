@@ -54,7 +54,8 @@ namespace UGUIExtension
         protected override void SetContentSize()
         {
             base.SetContentSize();
-            m_ScrollRect.content.sizeDelta = new Vector2(GetContentLength(LayoutOrient.Fixed), GetExtendLength());
+            m_ScrollRect.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, GetExtendLength());
+            m_ScrollRect.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, GetContentLength(LayoutOrient.Fixed));
         }
 
         protected override Vector2 GetItemDeltaPos()
