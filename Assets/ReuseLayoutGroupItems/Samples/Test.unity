@@ -1060,6 +1060,7 @@ GameObject:
   - component: {fileID: 758807241}
   - component: {fileID: 758807240}
   - component: {fileID: 758807243}
+  - component: {fileID: 758807239}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -1089,6 +1090,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &758807239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758807237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6927ee02096ca84b8a7953fd9d7b589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &758807240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,7 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfb02f4dd3ab5c4e99fbd1134f25d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ReuseScrollRect: {fileID: 0}
+  m_ReuseScrollRect: {fileID: 758807239}
   m_ReuseItem: {fileID: 0}
   m_ReuseGo: {fileID: 5870965185249516213, guid: f5d22edb9aef93e4a89967a2a04f013a,
     type: 3}

@@ -170,6 +170,12 @@ namespace UGUIExtension
             m_Items.Clear();
         }
 
+        public void InitItems(GameObject itemGo, int count, Action<int, GameObject> itemRefresh) {
+
+            InitItems(itemGo, itemRefresh);
+            RefreshItems(count);
+        }
+
         public void InitItems(GameObject itemGo, Action<int, GameObject> itemRefresh)
         {
             m_ItemGo = itemGo;

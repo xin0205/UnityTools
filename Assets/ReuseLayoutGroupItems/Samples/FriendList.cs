@@ -51,12 +51,12 @@ namespace Lin {
             //    scrollRectItem.GetComponent<FriendItem>().text.text = "Friend " + index;
             //});
 
-            m_ReuseScrollRect.InitItems(m_ReuseGo, (index, scrollRectItem) =>
+            m_ReuseScrollRect.InitItems(m_ReuseGo, 100, (index, scrollRectItem) =>
             {
                 scrollRectItem.GetComponent<FriendItem>().text.text = "Friend " + index;
             });
 
-            m_ReuseScrollRect.RefreshItems(100);
+            //m_ReuseScrollRect.RefreshItems(100);
         }
 
         // Update is called once per frame
