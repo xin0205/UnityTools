@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 6344942571490322852}
   - component: {fileID: 4010965724017096617}
   - component: {fileID: 6564744234240864635}
-  - component: {fileID: 3853916318532501337}
   - component: {fileID: 3091887767079012768}
   m_Layer: 5
   m_Name: ItemGrid
@@ -169,18 +168,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &3853916318532501337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5870965185249516213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055bffb3ddcb1af4cb202e20ff3b8a98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3091887767079012768
 MonoBehaviour:
   m_ObjectHideFlags: 0

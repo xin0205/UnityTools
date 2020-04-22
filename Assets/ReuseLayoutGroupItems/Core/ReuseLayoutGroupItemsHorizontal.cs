@@ -14,8 +14,8 @@ namespace UGUIExtension
                 case LayoutGroupType.Grid:
                     GridLayoutGroup gridLayoutGroup = (GridLayoutGroup)m_LayoutGroup;
 
-                    m_LayoutSpacingExtend = gridLayoutGroup.spacing.x;
-                    m_LayoutSpacingFixed = gridLayoutGroup.spacing.y;
+                    m_LayoutSpacing.Extend = gridLayoutGroup.spacing.x;
+                    m_LayoutSpacing.Fixed = gridLayoutGroup.spacing.y;
 
                     break;
 
@@ -31,22 +31,22 @@ namespace UGUIExtension
         {
             if (CheckLayoutGroupChildAlignment(GetAligment(LayoutOrient.Extend, AligmentTag.Start)))
             {
-                m_InitContentExtendPos = -m_LayoutLeft;
+                m_InitContentPos.Extend = -m_LayoutLeft;
             }
 
             if (CheckLayoutGroupChildAlignment(GetAligment(LayoutOrient.Extend, AligmentTag.End)))
             {
-                m_InitContentExtendPos = m_LayoutRight;
+                m_InitContentPos.Extend = m_LayoutRight;
             }
 
             if (CheckLayoutGroupChildAlignment(GetAligment(LayoutOrient.Fixed, AligmentTag.Start)))
             {
-                m_InitContentFixedPos = -m_LayoutTop;
+                m_InitContentPos.Fixed = -m_LayoutTop;
             }
 
             if (CheckLayoutGroupChildAlignment(GetAligment(LayoutOrient.Fixed, AligmentTag.End)))
             {
-                m_InitContentFixedPos = m_LayoutBottom;
+                m_InitContentPos.Fixed = m_LayoutBottom;
             }
         }
 
@@ -59,7 +59,7 @@ namespace UGUIExtension
 
         protected override Vector2 GetItemDeltaPos()
         {
-            return new Vector2(m_itemExtendDeltaPos, m_itemFixedDeltaPos);
+            return new Vector2(m_itemDeltaPos.Extend, m_itemDeltaPos.Fixed);
         }
 
         protected override void SetFixedItemCount()
@@ -106,33 +106,41 @@ namespace UGUIExtension
 
         protected override float GetItemLength(LayoutOrient layoutOrient, int index)
         {
-            if (SameItemLength)
+            ReuseItem reuseItem = Items.Find((item) => item.Index == index);
+
+            if (reuseItem == null)
             {
-                switch (layoutOrient)
+
+                if (Items.Count > 0)
                 {
-                    case LayoutOrient.Extend:
-                        return m_ItemPrefab.Width;
+                    reuseItem = Items[0];
+                }
+                else
+                {
+                    switch (layoutOrient)
+                    {
+                        case LayoutOrient.Extend:
+                            return m_ItemDefaultSize.Extend;
 
-                    case LayoutOrient.Fixed:
-                        return m_ItemPrefab.Height;
+                        case LayoutOrient.Fixed:
+                            return m_ItemDefaultSize.Fixed;
 
-                    default:
-                        return 0;
+                        default:
+                            return 0;
+                    }
                 }
             }
-            else
+
+            switch (layoutOrient)
             {
-                switch (layoutOrient)
-                {
-                    case LayoutOrient.Extend:
-                        return (index < 0 || index >= GetItemCount()) ? 0 : m_ItemExtendLengths[index];
+                case LayoutOrient.Extend:
+                    return reuseItem.GetComponent<RectTransform>().rect.width;
 
-                    case LayoutOrient.Fixed:
-                        return m_ItemPrefab.Height;
+                case LayoutOrient.Fixed:
+                    return reuseItem.GetComponent<RectTransform>().rect.height;
 
-                    default:
-                        return 0;
-                }
+                default:
+                    return 0;
             }
         }
 
@@ -141,10 +149,10 @@ namespace UGUIExtension
             switch (layoutOrient)
             {
                 case LayoutOrient.Extend:
-                    return m_ScrollRect.content.sizeDelta.x;
+                    return m_ScrollRect.content.rect.width;
 
                 case LayoutOrient.Fixed:
-                    return m_ScrollRect.content.sizeDelta.y;
+                    return m_ScrollRect.content.rect.height;
 
                 default:
                     return 0;
@@ -177,10 +185,10 @@ namespace UGUIExtension
                     switch (gridLayoutGroup.startAxis)
                     {
                         case GridLayoutGroup.Axis.Vertical:
-                            return m_NowExtendGroup * GetItemCount(LayoutOrient.Fixed) + m_NowFixedGroup;
+                            return m_NowGroup.Extend * GetItemCount(LayoutOrient.Fixed) + m_NowGroup.Fixed;
 
                         case GridLayoutGroup.Axis.Horizontal:
-                            return m_NowFixedGroup * GetItemCount(LayoutOrient.Extend) + m_NowExtendGroup;
+                            return m_NowGroup.Fixed * GetItemCount(LayoutOrient.Extend) + m_NowGroup.Extend;
 
 
                         default:
@@ -188,7 +196,7 @@ namespace UGUIExtension
                     }
 
                 case LayoutGroupType.Horizontal:
-                    return m_NowFixedGroup * GetItemCount(LayoutOrient.Extend) + m_NowExtendGroup;
+                    return m_NowGroup.Fixed * GetItemCount(LayoutOrient.Extend) + m_NowGroup.Extend;
                 case LayoutGroupType.Vertical:
                     return 0;
 
@@ -281,6 +289,12 @@ namespace UGUIExtension
         protected override Vector2 GetItemSize(int itemIndex)
         {
             return new Vector2(GetItemLength(LayoutOrient.Extend, itemIndex), GetItemLength(LayoutOrient.Fixed, itemIndex));
+        }
+
+        protected override void SetMinItemSize(GameObject itemGo)
+        {
+            m_MinItemLength.Extend = itemGo.GetComponent<RectTransform>().rect.width; 
+            m_MinItemLength.Fixed = itemGo.GetComponent<RectTransform>().rect.height;
         }
     }
 
