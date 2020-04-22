@@ -293,9 +293,14 @@ namespace UGUIExtension
 
         protected override void SetMinItemSize(GameObject itemGo)
         {
-            m_MinItemLength.Extend = itemGo.GetComponent<RectTransform>().rect.width; 
+            m_MinItemLength.Extend = itemGo.GetComponent<RectTransform>().rect.width;
             m_MinItemLength.Fixed = itemGo.GetComponent<RectTransform>().rect.height;
         }
-    }
 
+        protected override void SetCellSize()
+        {
+            ((GridLayoutGroup)m_LayoutGroup).cellSize = new Vector2(m_ItemDefaultSize.Fixed, m_ItemDefaultSize.Extend);
+
+        }
+    }
 }

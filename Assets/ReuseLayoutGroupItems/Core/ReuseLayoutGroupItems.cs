@@ -75,8 +75,6 @@ namespace UGUIExtension
         protected bool m_Init = false;
         protected bool m_RefreshLayout = false;
 
-        //protected int m_ItemExtendCount;
-
         protected List<float> m_ItemExtendLengths;
         protected float m_CheckRefreshStart = 0;
         protected float m_CheckRefreshEnd = 0;
@@ -108,10 +106,9 @@ namespace UGUIExtension
         {
             m_ItemShowCount = itemCount;
 
-            //当实际个数小于最大个数，且实际个数小于显示个数，动态生成
+            //当实际个数小于最大显示个数，且实际个数小于显示个数，动态生成
             int maxCount = GetItemMaxShowCount(LayoutOrient.Extend) * GetItemShowCount(LayoutOrient.Fixed);
             if (Items.Count < maxCount && Items.Count < m_ItemShowCount) {
-
                 int generateCount = Math.Min(m_ItemShowCount - Items.Count, maxCount - Items.Count);
                 GenerateItems(generateCount);
             }
@@ -142,7 +139,6 @@ namespace UGUIExtension
         public void SetContentPosToEnd()
         {
             m_ScrollRect.content.anchoredPosition = GetEndPos();
-            Debug.Log("endPos:" + GetEndPos());
             CheckAndRefreshLayout();
         }
 
@@ -161,16 +157,8 @@ namespace UGUIExtension
             return GetContentLength(LayoutOrient.Extend);
         }
 
-        protected void OnDestroy()
+        public void InitItems(GameObject itemGo, int count, Action<int, GameObject> itemRefresh)
         {
-            if (!m_Init)
-                return;
-
-            CleatItems();
-            m_Items.Clear();
-        }
-
-        public void InitItems(GameObject itemGo, int count, Action<int, GameObject> itemRefresh) {
 
             InitItems(itemGo, itemRefresh);
             RefreshItems(count);
@@ -181,13 +169,13 @@ namespace UGUIExtension
             m_ItemGo = itemGo;
             m_ItemRefresh = itemRefresh;
 
-            SetMinItemSize(itemGo);
-
             m_ItemDefaultSize = new OrientValue<float>()
             {
                 Extend = m_ItemGo.GetComponent<RectTransform>().rect.height,
                 Fixed = m_ItemGo.GetComponent<RectTransform>().rect.width,
             };
+
+            SetMinItemSize(itemGo);
 
             if (!InitCheck())
             {
@@ -203,6 +191,15 @@ namespace UGUIExtension
 
         }
 
+        protected void OnDestroy()
+        {
+            if (!m_Init)
+                return;
+
+            CleatItems();
+            m_Items.Clear();
+        }
+
         protected void GenerateItems(int count)
         {
             for (int i = 0; i < count; i++) {
@@ -216,7 +213,6 @@ namespace UGUIExtension
             GameObject item = GameObject.Instantiate(m_ItemGo, m_ScrollRect.content);
 
             ReuseItem reuseItem = item.GetComponent<ReuseItem>();
-
             if (reuseItem == null)
                 reuseItem = item.AddComponent<ReuseItem>();
 
@@ -252,6 +248,8 @@ namespace UGUIExtension
             {
                 m_LayoutGroupType = LayoutGroupType.Grid;
                 m_LayoutGroup = layoutGroup;
+                SetCellSize();
+
             }
 
             layoutGroup = m_ScrollRect.content.GetComponent<VerticalLayoutGroup>();
@@ -309,10 +307,6 @@ namespace UGUIExtension
             {
                 case LayoutGroupType.Grid:
                     GridLayoutGroup gridLayoutGroup = layoutGroup as GridLayoutGroup;
-
-                    m_LayoutSpacing.Extend = gridLayoutGroup.spacing.y;
-                    m_LayoutSpacing.Fixed = gridLayoutGroup.spacing.x;
-
                     break;
 
                 case LayoutGroupType.Vertical:
@@ -369,47 +363,16 @@ namespace UGUIExtension
             //Extend
             float extendScrollDelta = GetScrollDelta(LayoutOrient.Extend);
 
-            //Debug.Log("extendScrollDelta:" + extendScrollDelta);
+            int extendGroup = Mathf.FloorToInt(extendScrollDelta / GetItemLengthWithSpacing(LayoutOrient.Extend));
 
-            int loop = 0;
-            //一帧内移动跨越多个“Group”，需要多次判断
-            while (true)
+            extendGroup = Mathf.Clamp(extendGroup, 0, GetItemCount(LayoutOrient.Extend) - GetItemShowCount(LayoutOrient.Extend));
+
+            if (extendGroup != m_NowGroup.Extend || m_NowGroup.Extend == 0)
             {
-                //Debug.LogWarning("CheckRefreshLayout:" + m_NowGroup.Extend + "--" + GetItemCount() + "--" + extendScrollDelta + "--" + m_CheckRefreshStart + "--" + m_CheckRefreshEnd);
-
-                if (++loop >= 1000)
-                {
-                    Debug.LogWarning("CheckRefreshLayout Loop:" + m_NowGroup.Extend + "--" + GetItemCount() + "--" + extendScrollDelta + "--" + m_CheckRefreshStart + "--" + m_CheckRefreshEnd);
-                    break;
-                }
-
-                if (m_NowGroup.Extend < GetItemCount() && m_CheckRefreshEnd != m_CheckRefreshStart && extendScrollDelta >= m_CheckRefreshEnd)
-                {
-                    //Debug.Log("Arefresh1:" + m_NowExtendGroup + "--" + GetItemCount() + "--" + extendScrollDelta + "--" + m_CheckRefreshStart + "--" + m_CheckRefreshEnd);
-
-                    m_itemDeltaPos.Extend = GetItemDeltaSign(LayoutOrient.Extend) * m_CheckRefreshEnd;
-                    m_CheckRefreshStart = m_CheckRefreshEnd;
-                    m_NowGroup.Extend++;
-                    m_CheckRefreshEnd += GetNowItemExtendLengthWithSpacing();
-                    refresh = true;
-                    //Debug.Log("Brefresh1:" + m_NowExtendGroup + "--" + GetItemCount() + "--" + extendScrollDelta + "--" + m_CheckRefreshStart + "--" + m_CheckRefreshEnd);;
-                    //Debug.Log("re：" + m_itemDeltaPos.Extend);
-                }
-                else if (m_NowGroup.Extend > 0 && extendScrollDelta < m_CheckRefreshStart)
-                {
-                    m_CheckRefreshEnd = m_CheckRefreshStart;
-                    m_NowGroup.Extend--;
-                    m_CheckRefreshStart -= GetNowItemExtendLengthWithSpacing();
-                    m_itemDeltaPos.Extend = GetItemDeltaSign(LayoutOrient.Extend) * m_CheckRefreshStart;
-                    refresh = true;
-                    //Debug.Log("refresh2");
-                }
-                else
-                {
-                    break;
-                }
+                m_NowGroup.Extend = extendGroup;
+                m_itemDeltaPos.Extend = GetItemDeltaPos(extendGroup, LayoutOrient.Extend);
+                refresh = true;
             }
-
 
             if (m_LayoutGroupType == LayoutGroupType.Grid)
             {
@@ -891,6 +854,9 @@ namespace UGUIExtension
         protected abstract Vector2 GetItemSize(int itemIndex);
 
         protected abstract void SetMinItemSize(GameObject itemGo);
+
+        protected abstract void SetCellSize();
+        
     }
 
 }

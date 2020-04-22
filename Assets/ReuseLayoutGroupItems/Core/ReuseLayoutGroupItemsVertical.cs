@@ -303,6 +303,11 @@ namespace UGUIExtension
             m_MinItemLength.Fixed = Math.Min(m_MinItemLength.Fixed, itemGo.GetComponent<RectTransform>().rect.width);
 
         }
+
+        protected override void SetCellSize() {
+            ((GridLayoutGroup)m_LayoutGroup).cellSize = new Vector2(m_ItemDefaultSize.Fixed, m_ItemDefaultSize.Extend);
+
+        }
     }
 
 }
