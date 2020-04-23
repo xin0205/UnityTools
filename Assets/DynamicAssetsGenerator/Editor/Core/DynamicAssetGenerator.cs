@@ -158,7 +158,7 @@ namespace DevelopTools
                 ["__Variable_Definition__"] = variableDefinitioStr,
             };
 
-            TemplateScriptGenerator.GenerateScriptFile(Defitions.DynamicAssets.DefintionTemplateFile, Defitions.DynamicAssets.DynamicAssetDefintionFile, replaceStrDict);
+            TemplateScriptGenerator.GenerateScriptFile(Defitions.DynamicAssets.DefintionTemplateFile, Defitions.DynamicAssets.DynamicAssetDefintionFile, replaceStrDict, Encoding.UTF8);
         }
 
         private static List<DynamicAssetConfig> LoadDynamicAssetConfig(string configPath)
@@ -219,7 +219,7 @@ namespace DevelopTools
 
         private static string GetCodeBlock(List<CodeBlock> codeBlocks)
         {
-            return TemplateScriptGenerator.GenerateCodeBlock(Defitions.DynamicAssets.DefintionCodeBlockTemplateFile, codeBlocks);
+            return TemplateScriptGenerator.GenerateCodeBlock(Defitions.DynamicAssets.DefintionCodeBlockTemplateFile, codeBlocks, Encoding.UTF8);
 
         }
 
