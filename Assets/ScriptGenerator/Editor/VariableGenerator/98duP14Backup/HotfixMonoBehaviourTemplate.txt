@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace P14.Hotfix
 {
-    public class __Name__ : HotfixMonoBehaviour
+    public partial class __Name__ : HotfixMonoBehaviour
     {
 
-		public __Name__Variable m_UI;
+		public Variable m_UI;
 
         protected override void Awake(P14.HotfixMonoBehaviour uiFormLogic)
         {
             base.Awake(uiFormLogic);
-			m_UI = GetComponent<__Name__Variable>();
+			m_UI = new Variable(this);
         }
 
         protected override void Start()

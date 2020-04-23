@@ -19,13 +19,10 @@ namespace DevelopTools
     /// </summary>
     public static class TemplateScriptGenerator
     {
-        private static Dictionary<string, string> cachedCodeBlockDict = new Dictionary<string, string>();
-        private static Regex blockRegex = new Regex(@"#S_(?<blockName>.+)\r\n(?<block>(.+\n)+)#E_\k<blockName>");
+        private static Dictionary<string, string> s_CachedCodeBlockDict = new Dictionary<string, string>();
+        private static Regex s_BlockRegex = new Regex(@"#S_(?<blockName>.+)\r\n(?<block>(.+\n)+)#E_\k<blockName>");
 
-        public static void GenerateScriptFile(string templateFile, string outputFile, Dictionary<string, string> codeReplaceDict)
-        {
-            GenerateScriptFile(templateFile, outputFile, codeReplaceDict, Encoding.UTF8);
-        }
+        private static int s_CodeBlockCapacity = 100;
 
         /// <summary>
         /// 生成模板脚本文件
@@ -55,35 +52,37 @@ namespace DevelopTools
 
         }
 
-        public static string GenerateCodeBlock(string codeBlockFile, List<CodeBlock> codeBlocks)
+        public static Dictionary<string, string> GenerateCodeBlockDict(string codeBlockFile, List<CodeBlock> codeBlocks)
         {
-            return GenerateCodeBlock(codeBlockFile, codeBlocks, Encoding.UTF8);
+            Dictionary<string, string> codeBLockDict = new Dictionary<string, string>();
+
+            codeBlocks.ForEach((codeBlock) =>
+            {
+                codeBLockDict.Add(codeBlock.BlockName, GenerateCodeBlock(codeBlockFile, codeBlock, Encoding.UTF8));
+            });
+
+            return codeBLockDict;
         }
 
-        /// <summary>
-        /// 生成模板代码块
-        /// </summary>
-        /// <param name="codeBlockFile"></param>
-        /// <param name="codeBlocks"></param>
-        /// <param name="encoding"></param>
-        /// <returns></returns>
         public static string GenerateCodeBlock(string codeBlockFile, List<CodeBlock> codeBlocks, Encoding encoding)
         {
-            string codeBlockStr = "";
-
-            if (!cachedCodeBlockDict.ContainsKey(codeBlockFile))
+            StringBuilder codeContent = new StringBuilder(s_CodeBlockCapacity);
+            codeBlocks.ForEach((codeBlock) =>
             {
-                codeBlockStr = File.ReadAllText(codeBlockFile, encoding);
-                cachedCodeBlockDict.Add(codeBlockFile, codeBlockStr);
-            }
-            else
-            {
-                codeBlockStr = cachedCodeBlockDict[codeBlockFile];
-            }
+                codeContent.Append(GenerateCodeBlock(codeBlockFile, codeBlock, encoding));
+            });
 
-            MatchCollection matchBlocks = blockRegex.Matches(codeBlockStr);
+            return codeContent.ToString();
+        }
 
-            StringBuilder codeContent = new StringBuilder(1024);
+
+        public static string GenerateCodeBlock(string codeBlockFile, CodeBlock codeBlock, Encoding encoding)
+        {
+            string codeBlockContent = GetCodeBlockFileContent(codeBlockFile, encoding);
+
+            StringBuilder codeContent = new StringBuilder(s_CodeBlockCapacity);
+
+            MatchCollection matchBlocks = s_BlockRegex.Matches(codeBlockContent);
 
             string blockName;
             string block;
@@ -91,13 +90,12 @@ namespace DevelopTools
             foreach (Match matchBlock in matchBlocks)
             {
                 blockName = matchBlock.Groups["blockName"].Value;
-                CodeBlock sameBlock = codeBlocks.Find(((b) => b.BlockName == blockName));
 
-                if (sameBlock != null)
+                if (codeBlock.BlockName == blockName)
                 {
                     block = matchBlock.Groups["block"].Value;
                     StringBuilder blockContent = new StringBuilder(block);
-                    ReplaceCode(sameBlock.CodeReplacementDict, ref blockContent);
+                    ReplaceCode(codeBlock.CodeReplacementDict, ref blockContent);
                     codeContent.Append(blockContent);
                 }
             }
@@ -131,6 +129,25 @@ namespace DevelopTools
             return rowList;
 
         }
+
+
+        private static string GetCodeBlockFileContent(string codeBlockFile, Encoding encoding)
+        {
+            string codeBlockStr = "";
+
+            if (!s_CachedCodeBlockDict.ContainsKey(codeBlockFile))
+            {
+                codeBlockStr = File.ReadAllText(codeBlockFile, encoding);
+                s_CachedCodeBlockDict.Add(codeBlockFile, codeBlockStr);
+            }
+            else
+            {
+                codeBlockStr = s_CachedCodeBlockDict[codeBlockFile];
+            }
+
+            return codeBlockStr;
+        }
+
     }
 
 }

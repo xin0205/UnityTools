@@ -1,0 +1,9 @@
+﻿#S_ToggleListener
+				__VariableName__.onValueChanged.AddListener(__ClassName__.OnClick__VariableName__);
+#E_ToggleListener
+
+#S_ToggleCallback
+        public void OnClick__VariableName__(bool click)
+        {
+        }
+#E_ToggleCallback

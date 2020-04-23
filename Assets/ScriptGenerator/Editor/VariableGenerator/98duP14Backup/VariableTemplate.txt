@@ -4,17 +4,21 @@ using UnityEngine;
 
 namespace P14.Hotfix
 {
-    public class __Class_Name__ : HotfixMonoBehaviour
-    {
+	public partial class __Class_Name__ 
+	{
+		public class Variable
+		{
+			public __Class_Name__ __Class_Name__;
+
 __Variable_Declaration__
-		protected override void Awake(P14.HotfixMonoBehaviour uiFormLogic)
-        {
-			base.Awake(uiFormLogic);
+			public Variable(__Class_Name__ hotfixUGuiForm) {
+                __Class_Name__ = hotfixUGuiForm;
 
 __Variable_Definition__
 __Variable_ButtonListener__
-        }
-
-
-    }
+			}
+		}
+	}
 }
+
+__Comment__

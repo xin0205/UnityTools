@@ -5,7 +5,7 @@ using UnityEditor.ProjectWindowCallback;
 using UnityEngine;
 
 /// <summary>
-/// 重命名文件名，同时修改类名
+/// 重名命名文件名，同时修改类名
 /// </summary>
 class GenerateScriptsAction : EndNameEditAction
 {
@@ -19,12 +19,16 @@ class GenerateScriptsAction : EndNameEditAction
 
     internal static Object CreateAssetFormTemplate(string pathName, string resourceFile)
     {
+
         string fullName = Path.GetFullPath(pathName);
+
         StreamReader reader = new StreamReader(resourceFile);
         string content = reader.ReadToEnd();
         reader.Close();
 
+
         string fileName = Path.GetFileNameWithoutExtension(pathName);
+
         content = content.Replace("__Name__", fileName);
 
         StreamWriter writer = new StreamWriter(fullName, false, System.Text.Encoding.UTF8);

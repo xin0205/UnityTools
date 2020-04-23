@@ -1,13 +1,13 @@
 ﻿namespace P14.Hotfix
 {
-    public class __Name__ : HotfixUGuiForm
+    public partial class __Name__ : HotfixUGuiForm
     {
-		public __Name__Variable m_UI;
+		private Variable m_UI;
 
         public override void OnInit(P14.HotfixUGuiForm uiFormLogic,object userdata)
         {
 			base.OnInit(uiFormLogic, userdata);
-			m_UI = GetComponent<__Name__Variable>();
+			m_UI = new Variable(this);
         }
 
         public override void OnOpen(object userdata)

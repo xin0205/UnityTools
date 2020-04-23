@@ -52,7 +52,7 @@ namespace DevelopTools
 
         private static string GetVariableCode(List<CodeBlock> codeBlocks)
         {
-            return TemplateScriptGenerator.GenerateCodeBlock(Defitions.ScriptGenerator.SampleFolder + "/CodeBlock.txt", codeBlocks);
+            return TemplateScriptGenerator.GenerateCodeBlock(Defitions.ScriptGenerator.SampleFolder + "/CodeBlock.txt", codeBlocks, Encoding.UTF8);
 
         }
     }
