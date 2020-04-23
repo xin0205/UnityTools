@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UGUIExtension;
 
 namespace P14.Hotfix
 {
@@ -11,8 +12,8 @@ namespace P14.Hotfix
 			public __Class_Name__ __Class_Name__;
 
 __Variable_Declaration__
-			public Variable(__Class_Name__ hotfixUGuiForm) {
-                __Class_Name__ = hotfixUGuiForm;
+			public Variable(__Class_Name__ script) {
+                __Class_Name__ = script;
 
 __Variable_Definition__
 __Variable_ButtonListener__

@@ -31,15 +31,15 @@ namespace DevelopTools
         private static string m_SCEventCallbackFormat = "\t\t//{0}回调\n" +
                                                         "\t\tprivate void OnSC{1}(object sender, GameEventArgs gameEventArgs)\n" +
                                                         "\t\t{{\n" +
-                                                        "\t\t\tSC{2} sC{3} = (gameEventArgs as SC{4}EventArgs).SC{5};\n" +
-                                                        "\t\t}}\n";
+                                                        "\t\t\tSC{2} sC{3} = (gameEventArgs as SC{4}EventArgs).SC{5};\n\n" +
+                                                        "\t\t}}\n\n";
 
         private static string m_CSRequsetFormat = "\t\t//{0}请求\n" +
                                                   "\t\tpublic void {1}Request()\n" +
                                                   "\t\t{{\n" +
-                                                  "\t\t\tCS{2} cS{3} = new CS{4}();\n" +
+                                                  "\t\t\tCS{2} cS{3} = new CS{4}();\n\n" +
                                                   "\t\t\tNetworkTcpHelper.Instance.Send(cS{5});\n" +
-                                                  "\t\t}}\n";
+                                                  "\t\t}}\n\n";
 
         private static string m_SCEventSubStrs = "";
         private static string m_SCEventUnsubStrs = "";
@@ -123,7 +123,7 @@ namespace DevelopTools
 
                     m_SCEventSubStrs += string.Format(m_SCEventSubFormat, name, name);
                     m_SCEventUnsubStrs += string.Format(m_SCEventUnsubFormat, name, name);
-                    m_SCCallbackStrs += string.Format(m_SCEventCallbackFormat, m_NowComment, name, name, name, name, name); ;
+                    m_SCCallbackStrs += string.Format(m_SCEventCallbackFormat, m_NowComment, name, name, name, name, name);
 
                 }
 

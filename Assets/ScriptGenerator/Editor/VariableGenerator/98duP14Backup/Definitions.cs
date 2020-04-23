@@ -9,6 +9,7 @@
             public static readonly string CodeTemplateFile = ScriptGenerator.DirectoryPrefix + "VariableGenerator/VariableTemplate.txt";
             public static readonly string UIFormTemplateFile = ScriptGenerator.DirectoryPrefix + "VariableGenerator/HotfixUGuiFormTemplate.txt";
 
+            public static readonly string VariableDirectory = "Assets/Game/HotfixScripts/UIForms/UIVariables/";
 
         }
     }

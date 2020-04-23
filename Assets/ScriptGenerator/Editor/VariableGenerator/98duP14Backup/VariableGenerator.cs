@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -16,18 +16,21 @@ namespace DevelopTools
     {
         public const string Button = "Button";
         public const string Toggle = "Toggle";
+        public const string ToggleEx = "ToggleEx";
     }
 
     public class Variable
     {
         public string ShortType;
         public string VariableName;
+        public bool ContainExceptSign;
         public int Count;
 
-        public Variable(string shortTypeName, string variableName)
+        public Variable(string shortTypeName, string variableName, bool containExceptSign = false)
         {
             ShortType = shortTypeName;
             VariableName = variableName;
+            ContainExceptSign = containExceptSign;
             Count = 1;
 
         }
@@ -46,21 +49,20 @@ namespace DevelopTools
 
         private static Encoding m_Encoding = Encoding.UTF8;
 
-        private static string m_OutputFile = "";
-
         private static string m_ClassName;
         private static string m_VariableClassName;
         private static string m_Declarations;
         private static string m_Definitions;
+        private static string m_NameSpaces;
+
         private static string m_ClickListeners;
         private static string m_ClickCallbacks;
 
         private static string m_DeclarationFormat = "\t\t\tpublic {0} {1};\n";
-        private static string m_GoNamePrefixFormat = "#{0}_{1}";
+        private static string m_GoNamePrefixFormat = "{0}#{1}_{2}";
 
         private static string m_Comment = "";
 
-        //只能添加UI控件
         private static Dictionary<string, string> m_TypeDict = new Dictionary<string, string>()
         {
             //Unity
@@ -74,11 +76,24 @@ namespace DevelopTools
             ["Tg"] = "Toggle",
 
             //自定义扩展
+            //无限列表
             ["RLGIV"] = "ReuseLayoutGroupItemsVertical",
             ["RLGIH"] = "ReuseLayoutGroupItemsHorizontal",
             ["RLGI"] = "ReuseLayoutGroupItems",
+            ["TgEx"] = "ToggleEx",
+
+            //
 
         };
+
+        //private static Dictionary<string, List<string>> m_NameSpaceDict = new Dictionary<string, List<string>>()
+        //{
+        //    //自定义扩展
+        //    ["UIExtension"] = new List<string>() { "RLGIV", "RLGIH", "RLGI" },
+
+
+        //};
+
 
         private static Dictionary<string, string> m_CodeReplaceDict = new Dictionary<string, string>();
 
@@ -98,7 +113,7 @@ namespace DevelopTools
             GameObject root = menuCommand.context as GameObject;
 
             m_ClassName = root.name;
-            m_VariableClassName = m_ClassName + "Variable";
+            m_VariableClassName = m_ClassName + ".Variable";
 
             m_Declarations = "";//"\t\tpublic " + m_ClassName + " " + m_ClassName + ";\n";
 
@@ -138,7 +153,11 @@ namespace DevelopTools
                 //创建目录，同时生成XXUIForm.cs
                 Directory.CreateDirectory(outputDirectory);
 
-                GenerateUIFormScript();
+                //强制不覆盖，避免误操作
+                if (!File.Exists(m_ClassName + ".cs")) {
+                    GenerateUIFormScript();
+                }
+                
             }
 
             GenerateUIFormVariableScript();
@@ -147,8 +166,7 @@ namespace DevelopTools
 
         private static void GenerateUIFormVariableScript()
         {
-            string outputDirectory = Defitions.VariableGenerator.UIFormDirectory + m_ClassName + "/";
-            string outputFile = outputDirectory + m_ClassName + ".Variable.cs";
+            string outputFile = Defitions.VariableGenerator.VariableDirectory + m_ClassName + ".Variable.cs";
             TemplateScriptGenerator.GenerateScriptFile(Defitions.VariableGenerator.CodeTemplateFile, outputFile, m_CodeReplaceDict, m_Encoding);
 
         }
@@ -177,22 +195,24 @@ namespace DevelopTools
 
             //EditorUtility.SaveFilePanel("保存的窗口", Defitions.VariableGenerator.UIFormDirectory, m_VariableClassName, "cs");
             /*
-            StandaloneFileBrowser.SaveFilePanelAsync("保存的窗口", Defitions.VariableGenerator.UIFormDirectory, m_VariableClassName, "cs", (path) =>
+
+            StandaloneFileBrowser.SaveFilePanelAsync("保存的窗口", Defitions.VariableGenerator.UIFormDirectory, m_ClassName, "cs", (path) =>
             {
-                //Debug.Log(path);
-                TemplateScriptGenerator.GenerateScriptFile(Defitions.VariableGenerator.CodeTemplateFile, path, m_CodeReplaceDict, m_Encoding);
-                string directory = Path.GetDirectoryName(path);
+                string variableFilePath = Defitions.VariableGenerator.VariableDirectory + m_VariableClassName + ".cs";
+                TemplateScriptGenerator.GenerateScriptFile(Defitions.VariableGenerator.CodeTemplateFile, variableFilePath, m_CodeReplaceDict, m_Encoding);
 
-                string uiItemPath = directory + "/" + m_ClassName + ".cs";
+                if (string.IsNullOrEmpty(path))
+                    return;
 
-                if (!File.Exists(uiItemPath)) {
+                //强制不覆盖，避免误操作
+                if (!File.Exists(path)) {
                     Dictionary<string, string> CodeReplacement = new Dictionary<string, string>()
                     {
                         ["__Name__"] = m_ClassName,
                         ["__Variable_ButtonCallback__"] = m_ClickCallbacks
                     };
 
-                    TemplateScriptGenerator.GenerateScriptFile(m_UIItemTemplateFile, uiItemPath, CodeReplacement, m_Encoding);
+                    TemplateScriptGenerator.GenerateScriptFile(m_UIItemTemplateFile, path, CodeReplacement, m_Encoding);
 
                 }
 
@@ -237,7 +257,7 @@ namespace DevelopTools
                 //生成数组形式
                 if (!string.IsNullOrEmpty(variableIndex))
                 {
-                    Variable variable = new Variable(variableType, variableName);
+                    Variable variable = new Variable(variableType, variableName, transform.name.Contains(m_ExceptSign));
                     RecordArrayCode(variable);
                     return;
                 }
@@ -252,6 +272,7 @@ namespace DevelopTools
                         break;
 
                     case FullTypeName.Toggle:
+                    case FullTypeName.ToggleEx:
                         Toggle.GenerateToggle(m_ClassName, variableName);
                         break;
 
@@ -289,7 +310,7 @@ namespace DevelopTools
                                                    "\t\t\t\t\t{1}s.Add(" + m_ClassName + ".GetChildComponentByName<{2}>(\"{3}_\" + (i + 1)));\n" +
                                                    "\t\t\t\t}}\n";
 
-                string goNamePrefix = string.Format(m_GoNamePrefixFormat, variable.ShortType, variable.VariableName);
+                string goNamePrefix = string.Format(m_GoNamePrefixFormat, variable.ContainExceptSign ? m_ExceptSign : "", variable.ShortType, variable.VariableName);
                 m_Definitions += string.Format(arrayDefinitionFormat, variable.Count, variable.VariableName, fullType, goNamePrefix);
 
                 switch (fullType)
